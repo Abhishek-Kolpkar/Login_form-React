@@ -1,58 +1,55 @@
-import React, { useState } from 'react'
-// import './App.css'
+import React, { useState } from "react";
+export function LoginForm({ Login, error }) {
+  const [details, setDetails] = useState({ name: "", email: "", password: "" });
 
-const LoginForm = () => {
-  const [userName, setUserName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-  const [allEntry, setAllEntry] = useState([])
-
-  const submitForm = (e) => {
-    e.preventDefault()
-
-    const newEntry = {userName: userName, email: email, password: password}
-
-    setAllEntry([...allEntry, newEntry])
-  }
-
+    Login(details);
+  };
   return (
-    <>
-      <form onSubmit={submitForm}>
-      <div>
-          <label htmlFor='username'>Username</label>
-          <input type='text' name='username' id='username' value={userName} autoComplete='off' 
-          onChange={(e) => setUserName(e.target.value)}/>
+    <form onSubmit={submitHandler}>
+      <div className="form-inner">
+        <h2>Login Form</h2>
+        {error != "" ? <div className="error">{error}</div> : ""}
+        <div className="form-group">
+          <label htmlFor="name">Name*:</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            onChange={(e) => setDetails({ ...details, name: e.target.value })}
+            value={details.name}
+            autoComplete='off'
+          />
         </div>
 
-        <div>
-          <label htmlFor='email'>Email</label>
-          <input type='email' name='email' id='email' value={email} autoComplete='off' 
-          onChange={(e) => setEmail(e.target.value)}/>
+        <div className="form-group">
+          <label htmlFor="email">Email*:</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            onChange={(e) => setDetails({ ...details, email: e.target.value })}
+            value={details.email}
+            autoComplete='off'
+          />
         </div>
 
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input type='password' name='password' id='password' value={password} 
-          onChange={(e) => setPassword(e.target.value)}/>
+        <div className="form-group">
+          <label htmlFor="password">Password*:</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            onChange={(e) =>
+              setDetails({ ...details, password: e.target.value })
+            }
+            value={details.password}
+          />
         </div>
-
-        <button type='submit'>Login</button>
-      </form>
-
-      <div>
-        {
-          allEntry.map((curElem) => {
-            return(
-              <div className='showData'>
-                <p>Welcome {curElem.userName}</p>
-              </div>
-            )
-          })
-        }
+        <button type="submit">Login</button>
       </div>
-    </>
-  )
+    </form>
+  );
 }
-
-export default LoginForm
